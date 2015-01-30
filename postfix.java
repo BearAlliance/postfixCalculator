@@ -4,6 +4,9 @@
 // Advanced Data Structures
 // 2/5/2015
 
+// This program calculates the value of a postfix expression from a file "in.dat" with 
+// possible inclusion of unknown variables. There must be a whitespace between each operator, operand, and variable
+
 import java.util.*;
 import java.util.regex.*;
 import java.math.*;
@@ -11,8 +14,8 @@ import java.io.*;
 
 public class postfix
 {
-	public static KeyValuePair[] userVars = new KeyValuePair[1];
-	public static int userVarCounter = 0;
+	public static KeyValuePair[] userVars = new KeyValuePair[1]; // Array of variable pair objects
+	public static int userVarCounter = 0; // Records how many variables are currently stored
 
     public static void main(String[] args) 
     {
@@ -45,9 +48,8 @@ public class postfix
 
     public static void evaluate(Scanner input)
     {
-        Stack<Integer> operands = new Stack<Integer>();
-        KeyValuePair[] userVars = new KeyValuePair[20];
-        String next;
+        Stack<Integer> operands = new Stack<Integer>(); // Stored operands
+        String next; // Current working token
 
         while (input.hasNext()) // if there is a next token
         {
@@ -144,10 +146,14 @@ public class postfix
                 		userVars[i] = null;
                 	userVarCounter = 0; // Reset variable counter
                     System.out.println("The value of this expression is " + operands.pop()); // Print Result
-                    return;
+                    return; // Return to main
                 }
                 else {
-                    System.out.println("There is an unrecognized token");
+                    // If there is an urecognized token, it will continue on to the next one,
+                    // and disregard the most recent operand
+                    System.out.println("There is an unrecognized operator");
+                    System.out.println("Ignoring most recent operand");
+                    operands.pop();
                 }
             }
         }
@@ -157,6 +163,7 @@ public class postfix
     public static int factorial(int n){
     if (n < 1) {
         System.out.println("Factorial cannot be taken from negative or zero");
+        System.out.println("Using zero as result");
         return n;
     }
     else if (n <= 1)
@@ -165,10 +172,11 @@ public class postfix
         return n * factorial(n-1);
     }
 
+    // Prompts the user for the value of an unknown variable
     public static int defineVariable(String inputVar)
     {
-    	String userTemp;
-    	int userVar;
+    	String userTemp; // Placeholder until type int can be verified
+    	int userVar; // Verified user input
 
     	if (alreadyExists(inputVar)) // If the variable value has already been given
     		return getExisting(inputVar); // Return the stored user value
@@ -217,6 +225,7 @@ public class postfix
         return 0;
     }
 
+    // Ensures that the vairiable object array has enough slots to continue
     public static void ensureCapacity()
     {
         if (userVarCounter >= userVars.length) {
@@ -228,11 +237,9 @@ public class postfix
         return;
     }
 
-    //pattern assignment
+    // Pattern assignment
     public static final Pattern VARIABLE = 
      Pattern.compile("value|[a-z]");
     public static final Pattern OPERATOR = 
      Pattern.compile("[^\\w^\\s]{1,2}|_|\\^");
-    public static final Pattern POWER =
-     Pattern.compile("^");
 }
