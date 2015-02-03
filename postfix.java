@@ -160,16 +160,17 @@ public class postfix
     }
 
     // Calculates the factorial of a postivie number
-    public static int factorial(int n){
-    if (n < 1) {
-        System.out.println("Factorial cannot be taken from negative or zero");
-        System.out.println("Using zero as result");
-        return n;
-    }
-    else if (n <= 1)
-        return 1;
-    else
-        return n * factorial(n-1);
+    public static int factorial(int n)
+    {
+        if (n < 1) {
+            System.out.println("Factorial cannot be taken from negative or zero");
+            System.out.println("Using zero as result");
+            return n;
+        }
+        else if (n <= 1)
+            return 1;
+        else
+            return n * factorial(n-1);
     }
 
     // Prompts the user for the value of an unknown variable
