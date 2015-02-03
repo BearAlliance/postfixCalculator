@@ -195,7 +195,7 @@ public class postfix
                 }
            		else { // If input is not acceptable
             	    System.out.println("That was not a valad input"); // Error Message
-        	        System.out.println("");
+        	        System.out.println("Please enter an integer");
         	    }
     		}
         }
