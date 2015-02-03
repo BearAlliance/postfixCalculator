@@ -1,0 +1,13 @@
+-1234 4567 < 9876 -7654 > && $                                  1
+12 34 != 555 555 >= + $                                         2
+20   5   _   *   _   #   #   $                                  3
+variable _ # 9 - 1 || 3 + $                     -99             4
+number number ^  number number ^ ^ 50 / $       2               5
+a b c + b - c * + 4 - $                         1, 2, 3         6
+3 2 a + b _ * ! c c ^ 4 / # - + $               1, -1, 3        7
+33 x y + x z - * - $                            15, -10, 10     8
+this ! that ! / this that - this ! - * 6 + _ $  3, 2            9
+14 1 d 3 e - 5 + * d / 9 3 / - + ! e ^ # _ + $  2, 4           10
+1 2 + -456 -456 - / $                            division by zero
+12 -345 + # $                              sqrt of negative value
+12 -345 + ! $                         factorial of negative value

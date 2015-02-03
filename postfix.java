@@ -19,23 +19,26 @@ public class postfix
 
     public static void main(String[] args) 
     {
+        String printEQ;
+
         System.out.println("");
         System.out.println("Postfix form expression calculator by N. Cacace");
         try {
             BufferedReader inputStream = new BufferedReader(new FileReader("in.dat"));
             String line = inputStream.readLine(); 
-            //end of file when next line is null, 
-            //file is empty when first line is null
+            // End of file when next line is null, 
+            // File is empty when first line is null
             while (line != null) {
+                printEQ = new Scanner(line).findInLine(EQUASION);
                 System.out.println("");
-                System.out.println("The expression to be evaluated is: " + line);
-                evaluate(new Scanner(line));
-                line = inputStream.readLine(); //loads next line into line
+                System.out.println("The expression to be evaluated is: " + printEQ);
+                evaluate(new Scanner(line));    // Calculates equasion
+                line = inputStream.readLine(); // Loads next line into line
             }
         inputStream.close();
         System.out.println("Finished!");
         }
-        //handnle possible errors
+        // Handnle possible errors
         catch (FileNotFoundException e)
         {
             System.out.println("File does not exist");
@@ -78,20 +81,40 @@ public class postfix
                 }
                 else if (next.equals("/")) {//division
                     int tempDiv = operands.pop();
-                    operands.push(operands.pop() / tempDiv);
+                    if (tempDiv == 0) {
+                        System.out.println("Cannot devide by 0");
+                        System.out.println("Expression cannot be calculated");
+                        return;
+                    }
+                    else
+                        operands.push(operands.pop() / tempDiv);
                 }
                 else if (next.equals("^")) {//exponent
                     double tempExp = new Double(operands.pop());
                     operands.push((int)Math.pow(operands.pop().doubleValue(), tempExp));
                 }
                 else if (next.equals("#")) { //square root
-                    operands.push((int)Math.sqrt(operands.pop()));
+                    int tempSqrt = operands.pop();
+                    if (tempSqrt < 0){
+                        System.out.println("Cannot take square root of negative");
+                        System.out.println("Expression cannot be calculated");
+                        return;
+                    }
+                    else
+                        operands.push((int)Math.sqrt(tempSqrt));
                 }
                 else if (next.equals("_")) { //unary negation
                     operands.push(-operands.pop());
                 }
                 else if (next.equals("!")) { //factorial
-                        operands.push(factorial(operands.pop()));
+                    int tempFac = operands.pop();
+                    if (tempFac <= 0){
+                        System.out.println("Cannot take factorial of nagative or zero");
+                        System.out.println("Expression cannot be calculated");
+                        return;
+                    }
+                    else
+                        operands.push(factorial(tempFac));
                 }
                 else if (next.equals("<")) { //less than
                     if (operands.pop() > operands.pop())
@@ -142,7 +165,7 @@ public class postfix
                             operands.push(0);
                 }
                 else if (next.equals("$")) { //end
-                	for (int i = 0; i <= userVarCounter; i++) // Erase existing stored variables
+                	for (int i = 0; i < userVarCounter; i++) // Erase existing stored variables
                 		userVars[i] = null;
                 	userVarCounter = 0; // Reset variable counter
                     System.out.println("The value of this expression is " + operands.pop()); // Print Result
@@ -162,14 +185,14 @@ public class postfix
     // Calculates the factorial of a postivie number
     public static int factorial(int n)
     {
-        if (n < 1) {
+        if (n <= 0) {
             System.out.println("Factorial cannot be taken from negative or zero");
             System.out.println("Using zero as result");
             return n;
         }
-        else if (n <= 1)
+        else if (n <= 1) // Base Case
             return 1;
-        else
+        else             // General Case
             return n * factorial(n-1);
     }
 
@@ -184,7 +207,7 @@ public class postfix
     	else {
             ensureCapacity(); // Make sure the variable array is big enough
         	while(true) {
-            	System.out.print("Enter the value of " + inputVar + " > "); // Propt user for value
+            	System.out.print("Enter the value of \"" + inputVar + "\" > "); // Propt user for value
             	Scanner userIn = new Scanner(System.in);
             	userTemp = userIn.nextLine(); // Get the input from the user
             	if (userTemp.matches("\\d+|-\\d+")) { // If the input is an accpetable value
@@ -240,7 +263,9 @@ public class postfix
 
     // Pattern assignment
     public static final Pattern VARIABLE = 
-     Pattern.compile("value|[a-z]");
+     Pattern.compile("[a-zA-Z]+");
     public static final Pattern OPERATOR = 
-     Pattern.compile("[^\\w^\\s]{1,2}|_|\\^");
+     Pattern.compile("[^\\w\\s]{1,2}|_|\\^");
+    public static final Pattern EQUASION =
+     Pattern.compile("[^$]+");
 }
