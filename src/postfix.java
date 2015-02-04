@@ -24,7 +24,7 @@ public class postfix
         System.out.println("");
         System.out.println("Postfix form expression calculator by N. Cacace");
         try {
-            BufferedReader inputStream = new BufferedReader(new FileReader("in.dat"));
+            BufferedReader inputStream = new BufferedReader(new FileReader("../in.dat"));
             String line = inputStream.readLine(); 
             // End of file when next line is null, 
             // File is empty when first line is null
