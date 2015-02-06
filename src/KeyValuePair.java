@@ -1,3 +1,9 @@
+// Nick Cacace
+// Postfix Expression Calculator
+// Prof. Lee
+// Advanced Data Structures
+// 2/5/2015
+
 class KeyValuePair
 {
 	private String userVarName;

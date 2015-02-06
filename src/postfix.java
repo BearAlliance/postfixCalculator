@@ -29,14 +29,14 @@ public class postfix
             // End of file when next line is null, 
             // File is empty when first line is null
             while (line != null) {
-                printEQ = new Scanner(line).findInLine(EQUASION);
+                printEQ = new Scanner(line).findInLine(EQUASION); // Finds just the equasion text
                 System.out.println("");
                 System.out.println("The expression to be evaluated is: " + printEQ);
-                evaluate(new Scanner(line));    // Calculates equasion
+                evaluate(new Scanner(line));    // Calculates equasion > prints result
                 line = inputStream.readLine(); // Loads next line into line
             }
         inputStream.close();
-        System.out.println("Finished!");
+        System.out.println("Finished!"); // Done
         }
         // Handnle possible errors
         catch (FileNotFoundException e)
@@ -168,7 +168,17 @@ public class postfix
                 	for (int i = 0; i < userVarCounter; i++) // Erase existing stored variables
                 		userVars[i] = null;
                 	userVarCounter = 0; // Reset variable counter
-                    System.out.println("The value of this expression is " + operands.pop()); // Print Result
+                	try {
+                    	System.out.println("The value of this expression is " + operands.pop()); // Print Result
+                    }
+                    catch (EmptyStackException e) { // Nothing left to pop
+                    	System.out.println("Equation improperly formatted");
+                    	System.out.println("Too many operators, or not enough operands");
+                    }
+                    if (!operands.empty()) { // Leftover operands
+                        System.out.println("Equation improperly formatted");
+                        System.out.println("Too many operands, or not enough operators");
+                    }
                     return; // Return to main
                 }
                 else {
@@ -207,10 +217,10 @@ public class postfix
     	else {
             ensureCapacity(); // Make sure the variable array is big enough
         	while(true) {
-            	System.out.print("Enter the value of \"" + inputVar + "\" > "); // Propt user for value
+            	System.out.print("Enter the value of \"" + inputVar + "\" > "); // Prompt user for value
             	Scanner userIn = new Scanner(System.in);
             	userTemp = userIn.nextLine(); // Get the input from the user
-            	if (userTemp.matches("\\d+|-\\d+")) { // If the input is an accpetable value
+            	if (userTemp.matches("\\d+|-\\d+")) { // If the input is an accpetable integer value
             		userVar = Integer.parseInt(userTemp); // Make it in integer
             		userVars[userVarCounter] = new KeyValuePair(inputVar, userVar); // Store it
             		userVarCounter++; // Increment the counter
